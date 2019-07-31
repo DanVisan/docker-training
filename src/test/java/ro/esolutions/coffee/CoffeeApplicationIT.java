@@ -1,5 +1,6 @@
 package ro.esolutions.coffee;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +10,7 @@ import ro.esolutions.coffee.entities.Coffee;
 
 import static org.junit.Assert.assertEquals;
 
-public class CoffeeApplicationTests {
+public class CoffeeApplicationIT {
 
 	RestTemplate restTemplate = new RestTemplate();
 
