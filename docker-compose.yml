@@ -1,13 +1,13 @@
 version: '2'
 services:
-#  nginx:
-#    image: nginx
-#    volumes:
-#      - coffeeapp_coffee_docs_vol:/usr/share/nginx/html/coffee_docs
-#    ports:
-#      - 8081:80
+  nginx:
+    image: nginx
+    volumes:
+      - coffeeapp_coffee_docs_vol:/usr/share/nginx/html/coffee_docs
+    ports:
+      - 8081:80
   coffeeapp:
-    image: coffeeapp:4
+    image: coffeeapp:5
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/coffee
       SPRING_DATASOURCE_USERNAME: coffee
@@ -18,7 +18,6 @@ services:
       - 8080:8080
     volumes:
       - coffeeapp_coffee_docs_vol:/root/coffee_docs
-#      - ./coffee_docs:/root/coffee_docs
   postgres:
     image: postgres:11
     environment:
