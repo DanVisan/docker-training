@@ -13,6 +13,21 @@ public class CoffeeApplicationTests {
 
 	RestTemplate restTemplate = new RestTemplate();
 
+	@Test
+	public void givenId_whenGetCoffeeEndpointIsCalled_ThenReturnHttpStatusNotFound() {
+		//given
+		String id = "badId";
+
+		try {
+			//when
+			restTemplate.getForEntity("http://localhost:8080/coffee/{id}", Coffee.class, id);
+		} catch (HttpClientErrorException.NotFound ex) {
+			//then
+			assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
+		}
+
+	}
+
 	@Test(expected = HttpClientErrorException.NotFound.class)
 	public void givenId_whenGetCoffeeEndpointIsCalled_ThenReturnHttpStatus404() {
 		//given
