@@ -1,10 +1,9 @@
 package ro.esolutions.coffee;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import ro.esolutions.coffee.entities.Coffee;
 
@@ -13,6 +12,30 @@ import static org.junit.Assert.assertEquals;
 public class CoffeeApplicationTests {
 
 	RestTemplate restTemplate = new RestTemplate();
+
+	@Test(expected = HttpClientErrorException.NotFound.class)
+	public void givenId_whenGetCoffeeEndpointIsCalled_ThenReturnHttpStatus404() {
+		//given
+		String id = "badId";
+
+		//when
+		ResponseEntity<Coffee> actualResult = restTemplate.getForEntity("http://localhost:8080/coffee/{id}", Coffee.class, id);
+
+		//then
+		assertEquals(HttpStatus.NOT_FOUND, actualResult.getStatusCode());
+	}
+
+	@Test
+	public void givenId_whenGetCoffeeEndpointIsCalled_ThenReturnHttpStatus200() {
+		//given
+		String id = "1";
+
+		//when
+		ResponseEntity<Coffee> actualResult = restTemplate.getForEntity("http://localhost:8080/coffee/{id}", Coffee.class, id);
+
+		//then
+		assertEquals(HttpStatus.OK, actualResult.getStatusCode());
+	}
 
 	@Test
 	public void givenId_whenGetCoffeeEndpointIsCalled_ThenReturnCoffee() {
@@ -25,7 +48,6 @@ public class CoffeeApplicationTests {
 
 		//then
 		assertEquals(expectedCoffee, actualResult);
-
 	}
 
 }
